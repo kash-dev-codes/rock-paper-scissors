@@ -1,8 +1,8 @@
 let humanScore = 0;
 let computerScore = 0;
+let draws = 0;
 let roundNo = 0;
 
-console.log('Hello, I\'m working');
 
 function getComputerChoice(){
   const R = 'rock';
@@ -23,53 +23,69 @@ function getComputerChoice(){
 }
 
 function getUserChoice(){
-  userChoice = prompt('Rock, Paper, or Scissors?');
-  console.log(userChoice);
-  return userChoice;
+  let choice = prompt('Rock, Paper, or Scissors?');
+  return choice;
 }
 
-function playRound(humanChoice, computerChoice){
+function playRound( humanChoice, computerChoice){
   winMsg = `You Win! ${humanChoice} beats ${computerChoice}`;
   loseMsg = `You Lose! ${computerChoice} beats ${humanChoice}`;
-  cleanHC = humanChoice.toLowerCase();
+  cleanHC = String(humanChoice).toLowerCase();
 
-  if (computerChoice === 'rock'){
+  // ROUND Begin
+  // user vs computer score
+  // words played
+
+  let roundString = `You play: ${cleanHC.toUpperCase()}\nComputer plays: ${String(computerChoice).toUpperCase()}`;
+  console.log(roundString);
+
+  if(computerChoice === cleanHC){
+    console.log('Draw!!');
+    ++draws;
+  }
+  else if (computerChoice === 'rock'){
     if (cleanHC === 'paper'){
       ++humanScore;
-      console.log('You win');
+      console.log(winMsg);
     }
-    else (cleanHC === 'scissors'){
+    else if (cleanHC === 'scissors'){
       ++computerScore;
-      console.log('Computer wins');
+      console.log(loseMsg);
     }}
   else if (computerChoice === 'paper'){
     if (cleanHC === 'rock'){
       ++computerScore;
-      console.log('Computer Wins');
+      console.log(loseMsg);
     }
     else if (cleanHC === 'scissors'){
       ++humanScore;
-      console.log('You win');
+      console.log(winMsg);
     }}
   else if(computerChoice === 'scissors'){
     if (cleanHC === 'rock'){
       ++computerScore;
-      console.log('Computer Wins');
+      console.log(loseMsg);
     }
     else if (cleanHC === 'paper'){
       ++humanScore;
-      console.log('You win');
+      console.log(winMsg);
     }}
-  else{
-    console.log('Draw!!');
-  }
 
 }
 
-const compChoice = getComputerChoice();
-console.log(compChoice);
+function playGame(){
+  let compChoice = 0;
+  let userChoice = 0;
 
-const userChoice = getUserChoice;
-console.log(userChoice);
+  for (let round = 1; round <=5; round++){
+    console.log(`Round ${round}`);
+    compChoice = getComputerChoice();
+    userChoice = getUserChoice();
+    playRound(userChoice, compChoice);
+    
+  }
+  console.log('Final score');
+  console.log(`You: ${humanScore}\nComputer: ${computerScore}\nDraws: ${draws}`);
+}
 
-playRound(userChoice, humanChoice);
+playGame();
